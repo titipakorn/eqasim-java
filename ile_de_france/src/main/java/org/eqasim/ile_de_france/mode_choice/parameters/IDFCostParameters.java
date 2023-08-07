@@ -7,8 +7,9 @@ public class IDFCostParameters implements ParameterDefinition {
 
 	public static IDFCostParameters buildDefault() {
 		IDFCostParameters parameters = new IDFCostParameters();
-
-		parameters.carCost_EUR_km = 0.15;
+		//according to MenDetails, the cost of a car is 7 thb/km
+		//only gas around 3 thb/km
+		parameters.carCost_EUR_km = 7;
 
 		return parameters;
 	}

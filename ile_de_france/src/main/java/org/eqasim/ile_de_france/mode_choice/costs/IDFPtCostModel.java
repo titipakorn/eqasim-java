@@ -34,7 +34,7 @@ public class IDFPtCostModel implements CostModel {
 		this.transitSchedule = transitSchedule;
 	}
 
-	private boolean isOnlyMetroOrBus(List<? extends PlanElement> elements) {
+	private boolean isMRT(List<? extends PlanElement> elements) {
 		for (PlanElement element : elements) {
 			if (element instanceof Leg) {
 				Leg leg = (Leg) element;
@@ -43,7 +43,7 @@ public class IDFPtCostModel implements CostModel {
 					TransitPassengerRoute route = (TransitPassengerRoute) leg.getRoute();
 
 					String transportMode = transitSchedule.getTransitLines().get(route.getLineId()).getRoutes()
-							.get(route.getRouteId()).getTransportMode();
+							.get(route.getRouteId()).getTransportMode().toLowerCase();
 
 					if (!transportMode.equals("bus") && !transportMode.equals("subway")) {
 						return false;
@@ -55,49 +55,51 @@ public class IDFPtCostModel implements CostModel {
 		return true;
 	}
 
-	private final static Coord CENTER = new Coord(651726, 6862287);
+	
+	private boolean isBTS(List<? extends PlanElement> elements) {
+		for (PlanElement element : elements) {
+			if (element instanceof Leg) {
+				Leg leg = (Leg) element;
 
-	private double calculateBasisDistance_km(DiscreteModeChoiceTrip trip) {
-		return 1e-3 * (CoordUtils.calcEuclideanDistance(CENTER, trip.getOriginActivity().getCoord())
-				+ CoordUtils.calcEuclideanDistance(CENTER, trip.getDestinationActivity().getCoord()));
+				if (leg.getMode().equals(TransportMode.pt)) {
+					TransitPassengerRoute route = (TransitPassengerRoute) leg.getRoute();
+
+					String transportMode = transitSchedule.getTransitLines().get(route.getLineId()).getRoutes()
+							.get(route.getRouteId()).getTransportMode().toLowerCase();
+
+					if (!transportMode.equals("bus") && !transportMode.equals("subway")) {
+						return false;
+					}
+				}
+			}
+		}
+
+		return true;
 	}
+
+
+	// private final static Coord CENTER = new Coord(651726, 6862287);
+
+	// private double calculateBasisDistance_km(DiscreteModeChoiceTrip trip) {
+	// 	return 1e-3 * (CoordUtils.calcEuclideanDistance(CENTER, trip.getOriginActivity().getCoord())
+	// 			+ CoordUtils.calcEuclideanDistance(CENTER, trip.getDestinationActivity().getCoord()));
+	// }
 
 	@Override
 	public double calculateCost_MU(Person person, DiscreteModeChoiceTrip trip, List<? extends PlanElement> elements) {
-		// I) If the person has a subscription, the price is zero!
 
-		IDFPersonVariables personVariables = personPredictor.predictVariables(person, trip, elements);
+		boolean isBTS = isBTS(elements);
+		boolean isMRT = isMRT(elements);
 
-		if (personVariables.hasSubscription) {
-			return 0.0;
+		if (isMRT) {
+			return 32;
 		}
 
-		// II) If the trip is entirely inside of Paris, or it only consists of metro and
-		// bus, the price is 1.80 EUR
 
-		IDFSpatialVariables spatialVariables = spatialPredictor.predictVariables(person, trip, elements);
-		boolean isWithinParis = spatialVariables.hasUrbanOrigin && spatialVariables.hasUrbanDestination;
-
-		boolean isOnlyMetroOrBus = isOnlyMetroOrBus(elements);
-
-		if (isOnlyMetroOrBus || isWithinParis) {
-			return 1.8;
+		if (isBTS) {
+			return 38;
 		}
 
-		/*- 
-		 * III) Otherwise, we calculate as follows:
-		 *
-		 * 1) Determine the Euclidean distance from the origin station to the center of Paris.
-		 * 2) Determine the Euclidean distance from the destination station to the center of Paris.
-		 * 3) Add up the two distances to arrive at the distance D as the basis for price calculation.
-		 * 4) Calculate 0.25 EUR/km * D to arrive at a rough price estimate.
-		 * 
-		 * This assumes that trips in Île-de-France usually must cross through Paris (and otherwise
-		 * they would usually be a bus). And some brief experimentation with the route planner of 
-		 * RATP showed that the prices are roghly constructed by the total ride distance with
-		 * a price per distance. TODO: A more detailed analysis would be good to have!
-		 */
-
-		return 0.25 * calculateBasisDistance_km(trip);
+		return 20;
 	}
 }

@@ -34,16 +34,16 @@ public class IDFModeAvailability implements ModeAvailability {
 			modes.add(TransportMode.car);
 		}
 
-		// Check bike availability
-		boolean bikeAvailability = true;
+		// // Check bike availability
+		// boolean bikeAvailability = true;
 
-		if ("none".equals((String) person.getAttributes().getAttribute("bikeAvailability"))) {
-			bikeAvailability = false;
-		}
+		// if ("none".equals((String) person.getAttributes().getAttribute("bikeAvailability"))) {
+		// 	bikeAvailability = false;
+		// }
 
-		if (bikeAvailability) {
-			modes.add(TransportMode.bike);
-		}
+		// if (bikeAvailability) {
+		// 	modes.add(TransportMode.bike);
+		// }
 
 		// Add special mode "outside" if applicable
 		Boolean isOutside = (Boolean) person.getAttributes().getAttribute("outside");
