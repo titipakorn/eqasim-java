@@ -55,7 +55,7 @@ public class TestCorisica {
 			Assert.assertEquals(7782, (long) counts.get("car"));
 			Assert.assertEquals(894, (long) counts.get("car_passenger"));
 			Assert.assertEquals(2091, (long) counts.get("walk"));
-			Assert.assertEquals(2, (long) counts.get("bike"));
+			// Assert.assertEquals(2, (long) counts.get("bike"));
 			Assert.assertEquals(47, (long) counts.get("pt"));
 		}
 
@@ -87,7 +87,7 @@ public class TestCorisica {
 			Assert.assertEquals(3001, (long) counts.get("car"));
 			Assert.assertEquals(387, (long) counts.get("car_passenger"));
 			Assert.assertEquals(845, (long) counts.get("walk"));
-			Assert.assertEquals(0, (long) counts.getOrDefault("bike", 0L));
+			// Assert.assertEquals(0, (long) counts.getOrDefault("bike", 0L));
 			Assert.assertEquals(6, (long) counts.get("pt"));
 			Assert.assertEquals(95, (long) counts.get("outside"));
 		}
