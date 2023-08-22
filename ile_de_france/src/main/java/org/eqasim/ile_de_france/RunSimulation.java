@@ -32,8 +32,6 @@ public class RunSimulation {
 		// configure the time variant network here:
 		config.network().setTimeVariantNetwork(true);
 
-		config.controler().setOverwriteFileSetting(OverwriteFileSetting.deleteDirectoryIfExists);
-		
 		cmd.applyConfiguration(config);
 
 		Scenario scenario = ScenarioUtils.createScenario(config);
