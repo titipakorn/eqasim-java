@@ -44,7 +44,7 @@ public class CorsicaDrtModeParameters extends IDFModeParameters {
 		parameters.bike.betaTravelTime_u_min = -0.05;
 		parameters.bike.betaAgeOver18_u_a = -0.0496;
 
-		parameters.idfBike.betaInsideUrbanArea = 1.5;
+		// parameters.idfBike.betaInsideUrbanArea = 1.5;
 
 		// Walk
 		parameters.walk.alpha_u = 1.43;
