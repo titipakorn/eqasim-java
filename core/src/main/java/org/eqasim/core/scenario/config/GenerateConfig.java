@@ -30,7 +30,7 @@ public class GenerateConfig {
 	protected final List<String> ACTIVITY_TYPES = Arrays.asList("home", "work", "education", "shop", "leisure", "other",
 			"freight_loading", "freight_unloading", "outside");
 
-	protected final List<String> MODES = Arrays.asList("walk", "bike", "pt", "car", "car_passenger", "truck",
+	protected final List<String> MODES = Arrays.asList("walk", "pt", "car", "car_passenger", "truck",
 			"outside");
 
 	private final List<String> NETWORK_MODES = Arrays.asList("car", "car_passenger", "truck");
@@ -49,7 +49,7 @@ public class GenerateConfig {
 		this.threads = threads;
 	}
 
-	private final static int DEFAULT_ITERATIONS = 60;
+	private final static int DEFAULT_ITERATIONS = 1;
 
 	protected void adaptConfiguration(Config config) {
 		// General settings
@@ -69,7 +69,7 @@ public class GenerateConfig {
 		config.transit().setUseTransit(true);
 
 		// QSim settings
-		config.qsim().setEndTime(30.0 * 3600.0);
+		config.qsim().setEndTime(24 * 3600.0);
 		config.qsim().setNumberOfThreads(Math.min(12, threads));
 		config.qsim().setFlowCapFactor(sampleSize);
 		config.qsim().setStorageCapFactor(sampleSize);
@@ -122,9 +122,9 @@ public class GenerateConfig {
 		outsideParams.setBeelineDistanceFactor(1.0);
 		outsideParams.setTeleportedModeSpeed(1000.0);
 
-		ModeRoutingParams bikeParams = routingConfig.getOrCreateModeRoutingParams(TransportMode.bike);
-		bikeParams.setBeelineDistanceFactor(1.4);
-		bikeParams.setTeleportedModeSpeed(3.1); // 11.6 km/h
+		// ModeRoutingParams bikeParams = routingConfig.getOrCreateModeRoutingParams(TransportMode.bike);
+		// bikeParams.setBeelineDistanceFactor(1.4);
+		// bikeParams.setTeleportedModeSpeed(3.1); // 11.6 km/h
 
 		ModeRoutingParams walkParams = routingConfig.getOrCreateModeRoutingParams(TransportMode.walk);
 		walkParams.setBeelineDistanceFactor(1.3);
@@ -148,7 +148,7 @@ public class GenerateConfig {
 
 		dmcConfig.setTripEstimator(EqasimModeChoiceModule.UTILITY_ESTIMATOR_NAME);
 		dmcConfig.setTourEstimator(EstimatorModule.CUMULATIVE);
-		dmcConfig.setCachedModes(Arrays.asList("car", "bike", "pt", "walk", "car_passenger", "truck"));
+		dmcConfig.setCachedModes(Arrays.asList("car", "pt", "walk", "car_passenger", "truck"));
 
 		dmcConfig.setTourFinder(TourFinderModule.ACTIVITY_BASED);
 		dmcConfig.getActivityTourFinderConfigGroup().setActivityTypes(Arrays.asList("home", "outside"));
@@ -160,7 +160,7 @@ public class GenerateConfig {
 				EqasimModeChoiceModule.PASSENGER_CONSTRAINT_NAME, EqasimModeChoiceModule.OUTSIDE_CONSTRAINT_NAME));
 
 		dmcConfig.setHomeFinder(EqasimModeChoiceModule.HOME_FINDER);
-		dmcConfig.getVehicleTourConstraintConfig().setRestrictedModes(Arrays.asList("car", "bike"));
+		dmcConfig.getVehicleTourConstraintConfig().setRestrictedModes(Arrays.asList("car"));
 
 		dmcConfig.setTourFilters(Arrays.asList(EqasimModeChoiceModule.OUTSIDE_FILTER_NAME,
 				EqasimModeChoiceModule.TOUR_LENGTH_FILTER_NAME));
@@ -169,7 +169,7 @@ public class GenerateConfig {
 
 		eqasimConfig.setEstimator(TransportMode.car, EqasimModeChoiceModule.CAR_ESTIMATOR_NAME);
 		eqasimConfig.setEstimator(TransportMode.pt, EqasimModeChoiceModule.PT_ESTIMATOR_NAME);
-		eqasimConfig.setEstimator(TransportMode.bike, EqasimModeChoiceModule.BIKE_ESTIMATOR_NAME);
+		// eqasimConfig.setEstimator(TransportMode.bike, EqasimModeChoiceModule.BIKE_ESTIMATOR_NAME);
 		eqasimConfig.setEstimator(TransportMode.walk, EqasimModeChoiceModule.WALK_ESTIMATOR_NAME);
 
 		for (String mode : Arrays.asList("outside", "car_passenger", "truck")) {

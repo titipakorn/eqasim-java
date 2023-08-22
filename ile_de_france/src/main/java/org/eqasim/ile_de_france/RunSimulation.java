@@ -21,8 +21,7 @@ import org.matsim.api.core.v01.network.Link;
 
 public class RunSimulation {
 	static public void main(String[] args) throws ConfigurationException {
-		
-		System.out.println("Version 0.1 (2023-08-22)");
+
 
 		CommandLine cmd = new CommandLine.Builder(args) //
 				.requireOptions("config-path") //
@@ -46,9 +45,11 @@ public class RunSimulation {
 
 		// ---
 
+		System.out.println("Version 0.1 (2023-08-22)");
+
 		for ( Link link : scenario.getNetwork().getLinks().values() ) {
 			//convert to km/h
-			double speed = link.getFreespeed()*3.6 ;
+			int speed = (int) Math.round(link.getFreespeed()*3.6);
 			Set<String> linkType = link.getAllowedModes();
 			if(linkType.contains("car")	){
 			if ( speed==30 ) {
