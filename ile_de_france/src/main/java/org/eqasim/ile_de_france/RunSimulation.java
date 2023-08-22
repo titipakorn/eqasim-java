@@ -21,8 +21,9 @@ import org.matsim.api.core.v01.network.Link;
 
 public class RunSimulation {
 	static public void main(String[] args) throws ConfigurationException {
-
+		
 		System.out.println("Version 0.1 (2023-08-22)");
+
 		CommandLine cmd = new CommandLine.Builder(args) //
 				.requireOptions("config-path") //
 				.allowPrefixes("mode-choice-parameter", "cost-parameter") //
@@ -34,6 +35,8 @@ public class RunSimulation {
 		// configure the time variant network here:
 		config.network().setTimeVariantNetwork(true);
 
+		config.controler().setOverwriteFileSetting(OverwriteFileSetting.deleteDirectoryIfExists);
+		
 		cmd.applyConfiguration(config);
 
 		Scenario scenario = ScenarioUtils.createScenario(config);
