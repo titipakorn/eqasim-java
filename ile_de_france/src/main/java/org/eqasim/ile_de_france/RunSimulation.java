@@ -45,243 +45,118 @@ public class RunSimulation {
 
 		// ---
 
-		System.out.println("Version 0.1 (2023-08-22)");
+		System.out.println("Version 0.5 (2023-08-28)");
 
 		for ( Link link : scenario.getNetwork().getLinks().values() ) {
 			//convert to km/h
 			int speed = (int) Math.round(link.getFreespeed()*3.6);
 			Set<String> linkType = link.getAllowedModes();
 			if(linkType.contains("car")	){
-			if ( speed==30 ) {
-				{
-					//from 0 AM to 7 AM
-					NetworkChangeEvent event = new NetworkChangeEvent(0*3600.) ;
-					event.setFreespeedChange(new ChangeValue( ChangeType.ABSOLUTE_IN_SI_UNITS,  speed*1));
-					event.addLink(link);
-					NetworkUtils.addNetworkChangeEvent(scenario.getNetwork(),event);
+				if ( speed>80 ) {
+					{
+						//from 0 AM to 5 AM
+						NetworkChangeEvent event = new NetworkChangeEvent(0*3600.) ;
+						event.setFreespeedChange(new ChangeValue( ChangeType.FACTOR,  0.75));
+						event.setFlowCapacityChange(new ChangeValue( ChangeType.FACTOR, 0.62*2  ));
+						event.addLink(link);
+						NetworkUtils.addNetworkChangeEvent(scenario.getNetwork(),event);
+					}
+					{
+						//from 5 AM to 9 AM
+						NetworkChangeEvent event = new NetworkChangeEvent(5.*3600.) ;
+						event.setFreespeedChange(new ChangeValue( ChangeType.FACTOR,  0.85));
+						event.setFlowCapacityChange(new ChangeValue( ChangeType.FACTOR, 0.71*2  ));
+						event.addLink(link);
+						NetworkUtils.addNetworkChangeEvent(scenario.getNetwork(),event);
+					}
+					{
+						//from 9 AM to 1 PM
+						NetworkChangeEvent event = new NetworkChangeEvent(9*3600.) ;
+						event.setFreespeedChange(new ChangeValue( ChangeType.FACTOR,  0.75 ));
+						event.setFlowCapacityChange(new ChangeValue( ChangeType.FACTOR, 0.79*2  ));
+						event.addLink(link);
+						NetworkUtils.addNetworkChangeEvent(scenario.getNetwork(),event);
+					}
+					{
+						//from 1 PM to 4 PM
+						NetworkChangeEvent event = new NetworkChangeEvent(13*3600.) ;
+						event.setFreespeedChange(new ChangeValue( ChangeType.FACTOR,  0.85 ));
+						event.setFlowCapacityChange(new ChangeValue( ChangeType.FACTOR, 0.80*2  ));
+						event.addLink(link);
+						NetworkUtils.addNetworkChangeEvent(scenario.getNetwork(),event);
+					}
+					{
+						//from 4 PM to 7 PM
+						NetworkChangeEvent event = new NetworkChangeEvent(16*3600.) ;
+						event.setFreespeedChange(new ChangeValue( ChangeType.FACTOR, 1.75*0.65));
+						event.setFlowCapacityChange(new ChangeValue( ChangeType.FACTOR, 0.86*2  ));
+						event.addLink(link);
+						NetworkUtils.addNetworkChangeEvent(scenario.getNetwork(),event);
+					}
+					{
+						//from 7 PM to 0 AM
+						NetworkChangeEvent event = new NetworkChangeEvent(19*3600.) ;
+						event.setFreespeedChange(new ChangeValue( ChangeType.FACTOR, 1.40*0.76));
+						event.setFlowCapacityChange(new ChangeValue( ChangeType.FACTOR, 0.71*2  ));
+						event.addLink(link);
+						NetworkUtils.addNetworkChangeEvent(scenario.getNetwork(),event);
+					}
+	
 				}
+				else
 				{
-					//from 7 AM to 9 AM
-					NetworkChangeEvent event = new NetworkChangeEvent(7.*3600.) ;
-					event.setFreespeedChange(new ChangeValue( ChangeType.ABSOLUTE_IN_SI_UNITS,  speed*1));
-					event.addLink(link);
-					NetworkUtils.addNetworkChangeEvent(scenario.getNetwork(),event);
-				}
 				{
-					//from 9 AM to 4 PM
-					NetworkChangeEvent event = new NetworkChangeEvent(9*3600.) ;
-					event.setFreespeedChange(new ChangeValue( ChangeType.ABSOLUTE_IN_SI_UNITS,  speed*0.96 ));
-					event.addLink(link);
-					NetworkUtils.addNetworkChangeEvent(scenario.getNetwork(),event);
+						//from 0 AM to 5 AM
+						NetworkChangeEvent event = new NetworkChangeEvent(0*3600.) ;
+						event.setFreespeedChange(new ChangeValue( ChangeType.FACTOR,  0.92));
+						event.setFlowCapacityChange(new ChangeValue( ChangeType.FACTOR, 0.59*2  ));
+						event.addLink(link);
+						NetworkUtils.addNetworkChangeEvent(scenario.getNetwork(),event);
+					}
+					{
+						//from 5 AM to 9 AM
+						NetworkChangeEvent event = new NetworkChangeEvent(5.*3600.) ;
+						event.setFreespeedChange(new ChangeValue( ChangeType.FACTOR,  0.76));
+						event.setFlowCapacityChange(new ChangeValue( ChangeType.FACTOR, 0.66*2  ));
+						event.addLink(link);
+						NetworkUtils.addNetworkChangeEvent(scenario.getNetwork(),event);
+					}
+					{
+						//from 9 AM to 1 PM
+						NetworkChangeEvent event = new NetworkChangeEvent(9*3600.) ;
+						event.setFreespeedChange(new ChangeValue( ChangeType.FACTOR,  0.70 ));
+						event.setFlowCapacityChange(new ChangeValue( ChangeType.FACTOR, 0.70*2  ));
+						event.addLink(link);
+						NetworkUtils.addNetworkChangeEvent(scenario.getNetwork(),event);
+					}
+					{
+						//from 1 PM to 4 PM
+						NetworkChangeEvent event = new NetworkChangeEvent(13*3600.) ;
+						event.setFreespeedChange(new ChangeValue( ChangeType.FACTOR,  0.69 ));
+						event.setFlowCapacityChange(new ChangeValue( ChangeType.FACTOR, 0.71*2  ));
+						event.addLink(link);
+						NetworkUtils.addNetworkChangeEvent(scenario.getNetwork(),event);
+					}
+					{
+						//from 4 PM to 7 PM
+						NetworkChangeEvent event = new NetworkChangeEvent(16*3600.) ;
+						event.setFreespeedChange(new ChangeValue( ChangeType.FACTOR, 1.25));
+						event.setFlowCapacityChange(new ChangeValue( ChangeType.FACTOR, 0.76*2  ));
+						event.addLink(link);
+						NetworkUtils.addNetworkChangeEvent(scenario.getNetwork(),event);
+					}
+					{
+						//from 7 PM to 0 AM
+						NetworkChangeEvent event = new NetworkChangeEvent(19*3600.) ;
+						event.setFreespeedChange(new ChangeValue( ChangeType.FACTOR, 1.05));
+						event.setFlowCapacityChange(new ChangeValue( ChangeType.FACTOR, 0.67*2  ));
+						event.addLink(link);
+						NetworkUtils.addNetworkChangeEvent(scenario.getNetwork(),event);
+					}
 				}
-				{
-					//from 4 PM to 7 PM
-					NetworkChangeEvent event = new NetworkChangeEvent(16*3600.) ;
-					event.setFreespeedChange(new ChangeValue( ChangeType.ABSOLUTE_IN_SI_UNITS,  speed*0.94 ));
-					event.addLink(link);
-					NetworkUtils.addNetworkChangeEvent(scenario.getNetwork(),event);
-				}
-				{
-					//from 7 PM to 0 AM
-					NetworkChangeEvent event = new NetworkChangeEvent(19*3600.) ;
-					event.setFreespeedChange(new ChangeValue( ChangeType.ABSOLUTE_IN_SI_UNITS,  speed*1));
-					event.addLink(link);
-					NetworkUtils.addNetworkChangeEvent(scenario.getNetwork(),event);
-				}
+				
 			}
-			else if ( speed==45 ) {
-				{
-					//from 0 AM to 7 AM
-					NetworkChangeEvent event = new NetworkChangeEvent(0*3600.) ;
-					event.setFreespeedChange(new ChangeValue( ChangeType.ABSOLUTE_IN_SI_UNITS,  speed*0.88));
-					event.addLink(link);
-					NetworkUtils.addNetworkChangeEvent(scenario.getNetwork(),event);
-				}
-				{
-					//from 7 AM to 9 AM
-					NetworkChangeEvent event = new NetworkChangeEvent(7.*3600.) ;
-					event.setFreespeedChange(new ChangeValue( ChangeType.ABSOLUTE_IN_SI_UNITS,  speed*0.69));
-					event.addLink(link);
-					NetworkUtils.addNetworkChangeEvent(scenario.getNetwork(),event);
-				}
-				{
-					//from 9 AM to 4 PM
-					NetworkChangeEvent event = new NetworkChangeEvent(9*3600.) ;
-					event.setFreespeedChange(new ChangeValue( ChangeType.ABSOLUTE_IN_SI_UNITS,  speed*0.67 ));
-					event.addLink(link);
-					NetworkUtils.addNetworkChangeEvent(scenario.getNetwork(),event);
-				}
-				{
-					//from 4 PM to 7 PM
-					NetworkChangeEvent event = new NetworkChangeEvent(16*3600.) ;
-					event.setFreespeedChange(new ChangeValue( ChangeType.ABSOLUTE_IN_SI_UNITS,  speed*0.62 ));
-					event.addLink(link);
-					NetworkUtils.addNetworkChangeEvent(scenario.getNetwork(),event);
-				}
-				{
-					//from 7 PM to 0 AM
-					NetworkChangeEvent event = new NetworkChangeEvent(19*3600.) ;
-					event.setFreespeedChange(new ChangeValue( ChangeType.ABSOLUTE_IN_SI_UNITS,  speed*0.74));
-					event.addLink(link);
-					NetworkUtils.addNetworkChangeEvent(scenario.getNetwork(),event);
-				}
-
-			}
-			else if ( speed==50 ) {
-				{
-					//from 0 AM to 7 AM
-					NetworkChangeEvent event = new NetworkChangeEvent(0*3600.) ;
-					event.setFreespeedChange(new ChangeValue( ChangeType.ABSOLUTE_IN_SI_UNITS,  speed*1));
-					event.addLink(link);
-					NetworkUtils.addNetworkChangeEvent(scenario.getNetwork(),event);
-				}
-				{
-					//from 7 AM to 9 AM
-					NetworkChangeEvent event = new NetworkChangeEvent(7.*3600.) ;
-					event.setFreespeedChange(new ChangeValue( ChangeType.ABSOLUTE_IN_SI_UNITS,  speed*0.82));
-					event.addLink(link);
-					NetworkUtils.addNetworkChangeEvent(scenario.getNetwork(),event);
-				}
-				{
-					//from 9 AM to 4 PM
-					NetworkChangeEvent event = new NetworkChangeEvent(9*3600.) ;
-					event.setFreespeedChange(new ChangeValue( ChangeType.ABSOLUTE_IN_SI_UNITS,  speed*0.84 ));
-					event.addLink(link);
-					NetworkUtils.addNetworkChangeEvent(scenario.getNetwork(),event);
-				}
-				{
-					//from 4 PM to 7 PM
-					NetworkChangeEvent event = new NetworkChangeEvent(16*3600.) ;
-					event.setFreespeedChange(new ChangeValue( ChangeType.ABSOLUTE_IN_SI_UNITS,  speed*0.75 ));
-					event.addLink(link);
-					NetworkUtils.addNetworkChangeEvent(scenario.getNetwork(),event);
-				}
-				{
-					//from 7 PM to 0 AM
-					NetworkChangeEvent event = new NetworkChangeEvent(19*3600.) ;
-					event.setFreespeedChange(new ChangeValue( ChangeType.ABSOLUTE_IN_SI_UNITS,  speed*0.92));
-					event.addLink(link);
-					NetworkUtils.addNetworkChangeEvent(scenario.getNetwork(),event);
-				}
-
-			}
-			else if ( speed==60 ) {
-				{
-					//from 0 AM to 7 AM
-					NetworkChangeEvent event = new NetworkChangeEvent(0*3600.) ;
-					event.setFreespeedChange(new ChangeValue( ChangeType.ABSOLUTE_IN_SI_UNITS,  speed*0.72));
-					event.addLink(link);
-					NetworkUtils.addNetworkChangeEvent(scenario.getNetwork(),event);
-				}
-				{
-					//from 7 AM to 9 AM
-					NetworkChangeEvent event = new NetworkChangeEvent(7.*3600.) ;
-					event.setFreespeedChange(new ChangeValue( ChangeType.ABSOLUTE_IN_SI_UNITS,  speed*0.55));
-					event.addLink(link);
-					NetworkUtils.addNetworkChangeEvent(scenario.getNetwork(),event);
-				}
-				{
-					//from 9 AM to 4 PM
-					NetworkChangeEvent event = new NetworkChangeEvent(9*3600.) ;
-					event.setFreespeedChange(new ChangeValue( ChangeType.ABSOLUTE_IN_SI_UNITS,  speed*0.55 ));
-					event.addLink(link);
-					NetworkUtils.addNetworkChangeEvent(scenario.getNetwork(),event);
-				}
-				{
-					//from 4 PM to 7 PM
-					NetworkChangeEvent event = new NetworkChangeEvent(16*3600.) ;
-					event.setFreespeedChange(new ChangeValue( ChangeType.ABSOLUTE_IN_SI_UNITS,  speed*0.54 ));
-					event.addLink(link);
-					NetworkUtils.addNetworkChangeEvent(scenario.getNetwork(),event);
-				}
-				{
-					//from 7 PM to 0 AM
-					NetworkChangeEvent event = new NetworkChangeEvent(19*3600.) ;
-					event.setFreespeedChange(new ChangeValue( ChangeType.ABSOLUTE_IN_SI_UNITS,  speed*0.60));
-					event.addLink(link);
-					NetworkUtils.addNetworkChangeEvent(scenario.getNetwork(),event);
-				}
-
-			}
-			else if ( speed==80 ) {
-				{
-					//from 0 AM to 7 AM
-					NetworkChangeEvent event = new NetworkChangeEvent(0*3600.) ;
-					event.setFreespeedChange(new ChangeValue( ChangeType.ABSOLUTE_IN_SI_UNITS,  speed*0.59));
-					event.addLink(link);
-					NetworkUtils.addNetworkChangeEvent(scenario.getNetwork(),event);
-				}
-				{
-					//from 7 AM to 9 AM
-					NetworkChangeEvent event = new NetworkChangeEvent(7.*3600.) ;
-					event.setFreespeedChange(new ChangeValue( ChangeType.ABSOLUTE_IN_SI_UNITS,  speed*0.44));
-					event.addLink(link);
-					NetworkUtils.addNetworkChangeEvent(scenario.getNetwork(),event);
-				}
-				{
-					//from 9 AM to 4 PM
-					NetworkChangeEvent event = new NetworkChangeEvent(9*3600.) ;
-					event.setFreespeedChange(new ChangeValue( ChangeType.ABSOLUTE_IN_SI_UNITS,  speed*0.42 ));
-					event.addLink(link);
-					NetworkUtils.addNetworkChangeEvent(scenario.getNetwork(),event);
-				}
-				{
-					//from 4 PM to 7 PM
-					NetworkChangeEvent event = new NetworkChangeEvent(16*3600.) ;
-					event.setFreespeedChange(new ChangeValue( ChangeType.ABSOLUTE_IN_SI_UNITS,  speed*0.38 ));
-					event.addLink(link);
-					NetworkUtils.addNetworkChangeEvent(scenario.getNetwork(),event);
-				}
-				{
-					//from 7 PM to 0 AM
-					NetworkChangeEvent event = new NetworkChangeEvent(19*3600.) ;
-					event.setFreespeedChange(new ChangeValue( ChangeType.ABSOLUTE_IN_SI_UNITS,  speed*0.48));
-					event.addLink(link);
-					NetworkUtils.addNetworkChangeEvent(scenario.getNetwork(),event);
-				}
-
-			}
-			else
-			//speed=120
-			{
-				{
-					//from 0 AM to 7 AM
-					NetworkChangeEvent event = new NetworkChangeEvent(0*3600.) ;
-					event.setFreespeedChange(new ChangeValue( ChangeType.ABSOLUTE_IN_SI_UNITS,  speed*0.56));
-					event.addLink(link);
-					NetworkUtils.addNetworkChangeEvent(scenario.getNetwork(),event);
-				}
-				{
-					//from 7 AM to 9 AM
-					NetworkChangeEvent event = new NetworkChangeEvent(7.*3600.) ;
-					event.setFreespeedChange(new ChangeValue( ChangeType.ABSOLUTE_IN_SI_UNITS,  speed*0.46));
-					event.addLink(link);
-					NetworkUtils.addNetworkChangeEvent(scenario.getNetwork(),event);
-				}
-				{
-					//from 9 AM to 4 PM
-					NetworkChangeEvent event = new NetworkChangeEvent(9*3600.) ;
-					event.setFreespeedChange(new ChangeValue( ChangeType.ABSOLUTE_IN_SI_UNITS,  speed*0.41 ));
-					event.addLink(link);
-					NetworkUtils.addNetworkChangeEvent(scenario.getNetwork(),event);
-				}
-				{
-					//from 4 PM to 7 PM
-					NetworkChangeEvent event = new NetworkChangeEvent(16*3600.) ;
-					event.setFreespeedChange(new ChangeValue( ChangeType.ABSOLUTE_IN_SI_UNITS,  speed*0.36 ));
-					event.addLink(link);
-					NetworkUtils.addNetworkChangeEvent(scenario.getNetwork(),event);
-				}
-				{
-					//from 7 PM to 0 AM
-					NetworkChangeEvent event = new NetworkChangeEvent(19*3600.) ;
-					event.setFreespeedChange(new ChangeValue( ChangeType.ABSOLUTE_IN_SI_UNITS,  speed*0.46));
-					event.addLink(link);
-					NetworkUtils.addNetworkChangeEvent(scenario.getNetwork(),event);
-				}
-
-			}
-		}
+	
 
 	}
 		
